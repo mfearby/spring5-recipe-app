@@ -31,6 +31,15 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
+    // Without a @JoinTable annotation on one of the ManyToMany tables, JPA
+    // would create two tables: RECIPE_CATEGORIES and CATEGORY_RECIPES.
+    // The "other" one needs a @ManyToMany(mappedBy = "categories") to prevent its table being created also!
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
+
 
     public Long getId() {
         return id;
