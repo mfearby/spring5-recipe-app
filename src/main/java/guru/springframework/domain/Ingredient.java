@@ -12,6 +12,13 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
+    public Ingredient(String description, BigDecimal amount, Recipe recipe, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.recipe = recipe;
+        this.uom = uom;
+    }
+
     // many of these ingredients to one recipe elsewhere
     @ManyToOne
     private Recipe recipe;
