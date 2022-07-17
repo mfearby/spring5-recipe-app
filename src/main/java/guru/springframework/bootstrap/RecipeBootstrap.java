@@ -57,19 +57,16 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
             Notes notes = new Notes();
             notes.setRecipeNotes("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
-            notes.setRecipe(guac);
             guac.setNotes(notes);
 
-            Set<Ingredient> items = new HashSet<>();
-            items.add(new Ingredient("Ripe avocados", BigDecimal.valueOf(2), guac, each));
-            items.add(new Ingredient("Teaspoon of salt, plus more to taste", BigDecimal.valueOf(0.25), guac, teaSpoon));
-            items.add(new Ingredient("Tablespoons minced red onion or thinly sliced green onion", BigDecimal.valueOf(2), guac, tblSpoon));
-            items.add(new Ingredient("Serrano (or jalapeño) chilis, stems and seeds removed, minced", BigDecimal.valueOf(1), guac, each));
-            items.add(new Ingredient("Cilantro (leaves and tender stems), finely chopped", BigDecimal.valueOf(2), guac, tblSpoon));
-            items.add(new Ingredient("Freshly ground black pepper", BigDecimal.valueOf(1), guac, pinch));
-            items.add(new Ingredient("Ripe tomato, chopped (optional)", BigDecimal.valueOf(0.5), guac, each));
-            items.add(new Ingredient("Red radish or jicama slices for garnish (optional)", BigDecimal.valueOf(1), guac, each));
-            guac.setIngredients(items);
+            guac.addIngredient(new Ingredient("Ripe avocados", BigDecimal.valueOf(2), each));
+            guac.addIngredient(new Ingredient("Teaspoon of salt, plus more to taste", BigDecimal.valueOf(0.25), teaSpoon));
+            guac.addIngredient(new Ingredient("Tablespoons minced red onion or thinly sliced green onion", BigDecimal.valueOf(2), tblSpoon));
+            guac.addIngredient(new Ingredient("Serrano (or jalapeño) chilis, stems and seeds removed, minced", BigDecimal.valueOf(1), each));
+            guac.addIngredient(new Ingredient("Cilantro (leaves and tender stems), finely chopped", BigDecimal.valueOf(2), tblSpoon));
+            guac.addIngredient(new Ingredient("Freshly ground black pepper", BigDecimal.valueOf(1), pinch));
+            guac.addIngredient(new Ingredient("Ripe tomato, chopped (optional)", BigDecimal.valueOf(0.5), each));
+            guac.addIngredient(new Ingredient("Red radish or jicama slices for garnish (optional)", BigDecimal.valueOf(1), each));
 
             guac.getCategories().add(mexican);
 

@@ -12,6 +12,13 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
+    // New constructor without Recipe arg (that association will be set by Recipe.addIngredient
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
+    }
+
     public Ingredient(String description, BigDecimal amount, Recipe recipe, UnitOfMeasure uom) {
         this.description = description;
         this.amount = amount;
@@ -25,6 +32,10 @@ public class Ingredient {
 
     @OneToOne
     private UnitOfMeasure uom;
+
+    public Ingredient() {
+
+    }
 
     public Long getId() {
         return id;
