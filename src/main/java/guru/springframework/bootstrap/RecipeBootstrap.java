@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -26,6 +27,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
+    // John Thompson had to add a @Transactional annotation here to avoid an intermittent
+    // LazyInitializationException, but that isn't happening to me (prob coz I'm on a newer Lombok/Spring)
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         log.info("Loading recipes...");
