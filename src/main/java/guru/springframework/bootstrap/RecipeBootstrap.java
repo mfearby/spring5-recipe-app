@@ -4,6 +4,7 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -26,6 +28,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.info("Loading recipes...");
         List<Recipe> recipes = getRecipes();
         recipeRepository.saveAll(recipes);
     }
@@ -75,7 +78,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
             // etc (similar for American recipe)
 
         } catch (Exception ex) {
-            System.out.println("getRecipes() Exception was thrown:\n");
+            log.error("getRecipes() Exception was thrown:\n");
             ex.printStackTrace();
         }
 
