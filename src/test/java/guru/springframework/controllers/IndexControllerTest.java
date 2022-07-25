@@ -9,6 +9,7 @@ import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -44,6 +45,7 @@ public class IndexControllerTest {
 
     @Test
     public void getIndexPage() {
+        // GIVEN
         Category mexican = new Category();
         mexican.setDescription("Test Mexican");
         Optional<Category> optionalMexican = Optional.of(mexican);
@@ -65,11 +67,20 @@ public class IndexControllerTest {
 
         when(recipeService.getRecipes()).thenReturn(recipes);
 
-        // Execute
+        ArgumentCaptor<Set<Recipe>> capturedRecipes = ArgumentCaptor.forClass(Set.class);
+
+        // WHEN
         String result = indexController.getIndexPage(testModel);
 
+        // THEN
         assertEquals("index", result);
         verify(recipeService, times(1)).getRecipes();
-        verify(testModel, times(1)).addAttribute(eq("recipes"), anySet());
+        verify(testModel, times(1)).addAttribute(eq("recipes"), capturedRecipes.capture());
+
+        Set<Recipe> actualRecipes = capturedRecipes.getValue();
+        assertEquals(1, actualRecipes.size());
+
+        Recipe firstRecipe = (Recipe)actualRecipes.toArray()[0];
+        assertEquals("Test Cake", firstRecipe.getDescription());
     }
 }
