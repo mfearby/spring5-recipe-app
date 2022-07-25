@@ -70,6 +70,6 @@ public class IndexControllerTest {
 
         assertEquals("index", result);
         verify(recipeService, times(1)).getRecipes();
-        verify(testModel, times(1)).addAttribute(eq("recipes"), any());
+        verify(testModel, times(1)).addAttribute(eq("recipes"), anySet());
     }
 }
