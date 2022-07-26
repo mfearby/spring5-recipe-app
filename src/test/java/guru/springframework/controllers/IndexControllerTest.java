@@ -1,12 +1,8 @@
 package guru.springframework.controllers;
 
-import guru.springframework.domain.Category;
 import guru.springframework.domain.Notes;
 import guru.springframework.domain.Recipe;
-import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.recipes.RecipeService;
-import guru.springframework.repositories.CategoryRepository;
-import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -14,23 +10,22 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 public class IndexControllerTest {
 
     private IndexController indexController;
 
-    @Mock
-    private CategoryRepository categoryRepository;
-    @Mock
-    private UnitOfMeasureRepository unitOfMeasureRepository;
     @Mock
     private RecipeService recipeService;
     @Mock
@@ -40,22 +35,21 @@ public class IndexControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        indexController = new IndexController(categoryRepository, unitOfMeasureRepository, recipeService);
+        indexController = new IndexController(recipeService);
+    }
+
+    @Test
+    public void testMockMvc() throws Exception {
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
+
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"));
     }
 
     @Test
     public void getIndexPage() {
         // GIVEN
-        Category mexican = new Category();
-        mexican.setDescription("Test Mexican");
-        Optional<Category> optionalMexican = Optional.of(mexican);
-        when(categoryRepository.findByDescription(any())).thenReturn(optionalMexican);
-
-        UnitOfMeasure inch = new UnitOfMeasure();
-        inch.setDescription("Test Inch");
-        Optional<UnitOfMeasure> optionalInch = Optional.of(inch);
-        when(unitOfMeasureRepository.findByDescription(any())).thenReturn(optionalInch);
-
         Recipe cake = new Recipe();
         cake.setDescription("Test Cake");
         Notes cakeNotes = new Notes();
