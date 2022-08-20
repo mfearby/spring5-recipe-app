@@ -21,6 +21,7 @@
 <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
 <!--/*@thymesVar id="category" type="guru.springframework.domain.Category"*/-->
 <!--/*@thymesVar id="ingredient" type="guru.springframework.domain.Ingredient"*/-->
+<!--/*@thymesVar id="notes" type="guru.springframework.domain.Notes"*/-->
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -36,9 +37,9 @@
                             </div>
                             <div class="col-md-9">
                                 <ul>
-                                    <tr th:each="category : ${recipe.categories}">
-                                        <li th:text="${category.description}">cat desc</li>
-                                    </tr>
+                                    <li th:remove="all">cat one</li>
+                                    <li th:remove="all">cat two</li>
+                                    <li th:each="category : ${recipe.categories}" th:text="${category.description}">cat three</li>
                                 </ul>
                             </div>
                         </div>
@@ -47,7 +48,7 @@
                                 <h5>Prep Time:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.prepTime}"></p>
+                                <p th:text="${recipe.prepTime + ' min'}"></p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Difficulty:</h5>
@@ -61,7 +62,7 @@
                                 <h5>Cooktime:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.cookTime}"></p>
+                                <p th:text="${recipe.cookTime + ' min'}"></p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Servings:</h5>
@@ -93,8 +94,11 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <ul th:each="ingredient : ${recipe.ingredients}">
-                                    <li th:text="${ingredient.description}">ingredient desc</li>
+                                <ul>
+                                    <li th:remove="all">1 Cup of milk</li>
+                                    <li th:remove="all">1 Teaspoon of chocolate</li>
+                                    <li th:each="ingredient : ${recipe.ingredients}"
+                                        th:text="${ingredient.amount + ' ' + ingredient.uom.description + ' - ' + ingredient.description}">1 Teaspoon of Sugar</li>
                                 </ul>
                             </div>
                         </div>
@@ -119,7 +123,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p th:text="${recipe.notes}">recipe notes</p>
+                                <p th:text="${recipe.notes.recipeNotes}">recipe notes</p>
                             </div>
                         </div>
                     </div>

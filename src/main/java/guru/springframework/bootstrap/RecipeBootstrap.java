@@ -60,9 +60,12 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
             guac.setCookTime(0);
             guac.setDifficulty(Difficulty.EASY);
             guac.setDirections("1. Cut the avocado\n2. Mash the avocado flesh\n3. Add the remaining ingredients to taste\n4. Serve immediately");
+            guac.setServings(4);
+            guac.setSource("Simply Recipes");
+            guac.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
 
             Notes notes = new Notes();
-            notes.setRecipeNotes("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
+            notes.setRecipeNotes("Enjoy!");
             guac.setNotes(notes);
 
             guac.addIngredient(new Ingredient("Ripe avocados", BigDecimal.valueOf(2), each));
